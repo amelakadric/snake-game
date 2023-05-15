@@ -20,3 +20,9 @@ td {
   border-radius: 0.4rem;
   margin-left: 0.2rem;
 }
+
+.snake {
+  background-color: orange;
+  width: 1.2rem;
+  height: 1.2rem;
+}
