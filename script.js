@@ -3,6 +3,16 @@ $(document).ready(function () {
     constructor(x, y) {
       this.x = x;
       this.y = y;
+      this.len = 1;
+      this.body = [];
+      this.body.push(new Point(x, y));
+    }
+  }
+
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
     }
   }
   let boardSize;
@@ -24,49 +34,86 @@ $(document).ready(function () {
 
   startGame();
 
-  function checkForCollision() {
-    if (snake.y == snackI && snake.x == snackJ) {
-      $(".circle").remove();
-      generateSnack();
-    }
+  function gameOver() {
+    alert("game over");
   }
 
-  function moveSnake(newY, newX) {
-    let str =
+  function checkForFoodCollision(x, y) {
+    if (y == snackI && x == snackJ) {
+      snake.len++;
+      $(".circle").remove();
+      generateSnack();
+      return true;
+    }
+    return false;
+  }
+
+  function checkForSnakeCollision() {
+    let s =
       "#game-board tr:nth-child(" +
       snake.y +
       ") td:nth-child(" +
       snake.x +
       ") .snake";
+
+    if ($(s).length) {
+      return true;
+    }
+    return false;
+  }
+
+  function moveSnake(newY, newX) {
+    // directions.unshift(dir);
+
+    last = snake.body[snake.body.length - 1];
+
+    let str =
+      "#game-board tr:nth-child(" +
+      last.y +
+      ") td:nth-child(" +
+      last.x +
+      ") .snake";
     $(str).remove();
+    snake.body.pop();
     snake.y = newY;
     snake.x = newX;
-    checkForCollision();
+    snake.body.unshift(new Point(newX, newY));
+    if (checkForSnakeCollision()) gameOver();
+
     drawSnake();
+    if (checkForFoodCollision(newX, newY)) {
+      let p;
+      p = new Point(last.x, last.y);
+
+      snake.body.push(p);
+      let str =
+        "#game-board tr:nth-child(" + last.y + ") td:nth-child(" + last.x + ")";
+      $(str).append($("<div></div>").attr("class", "snake"));
+    }
   }
 
   function keyHandler(event) {
     if (event.keyCode == 38) {
       newSnakeY = snake.y - 1;
-      if (newSnakeY == 0) newSnakeY = boardSize;
+      if (newSnakeY == 0) gameOver();
       moveSnake(newSnakeY, snake.x);
     }
     //dole
     if (event.keyCode == 40) {
       newSnakeY = snake.y + 1;
-      if (newSnakeY == boardSize + 1) newSnakeY = 1;
+      if (newSnakeY == boardSize + 1) gameOver();
       moveSnake(newSnakeY, snake.x);
     }
     //levo
     if (event.keyCode == 37) {
       newSnakeX = snake.x - 1;
-      if (newSnakeX == 0) newSnakeX = boardSize;
+      if (newSnakeX == 0) gameOver();
       moveSnake(snake.y, newSnakeX);
     }
     //desno
     if (event.keyCode == 39) {
       newSnakeX = snake.x + 1;
-      if (newSnakeX == boardSize + 1) newSnakeX = 1;
+      if (newSnakeX == boardSize + 1) gameOver();
       moveSnake(snake.y, newSnakeX);
     }
   }
@@ -114,13 +161,21 @@ $(document).ready(function () {
       }
       $("#game-board").append(row);
     }
-
     drawSnake();
   }
 
   function generateSnack() {
     let n = Math.floor(Math.random() * (boardSize * boardSize));
-    while (n == snake.x * snake.y - 1) {
+    snackI = Math.floor(n / boardSize) + 1;
+    snackJ = Math.floor(n % boardSize) + 1;
+    let s =
+      "#game-board tr:nth-child(" +
+      snackI +
+      ") td:nth-child(" +
+      snackJ +
+      ") .snake";
+
+    while ($(s).length) {
       n = Math.floor(Math.random() * (boardSize * boardSize));
     }
 
