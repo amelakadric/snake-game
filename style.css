@@ -1,5 +1,5 @@
 #game-board {
-  margin: 5rem auto;
+  margin: 2rem auto;
 }
 
 td {
@@ -21,8 +21,20 @@ td {
   margin-left: 0.2rem;
 }
 
+.star {
+  background-color: yellow;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.4rem;
+  margin-left: 0.2rem;
+}
+
 .snake {
   background-color: orange;
   width: 1.2rem;
   height: 1.2rem;
+}
+
+.score {
+  margin: 2rem auto;
 }

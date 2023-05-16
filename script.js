@@ -3,7 +3,6 @@ $(document).ready(function () {
     constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.len = 1;
       this.body = [];
       this.body.push(new Point(x, y));
     }
@@ -16,12 +15,16 @@ $(document).ready(function () {
     }
   }
   let boardSize;
+  let score = 0;
   let optionNumBoardSize = 1;
   let board = $("#game-board");
   const snake = new Snake(5, 5);
 
   let snackI;
   let snackJ;
+  let specialI;
+  let specialJ;
+  let specialRemoved = true;
 
   $("#start").click(function () {
     optionNumBoardSize = $("#table-size-select").val();
@@ -40,9 +43,27 @@ $(document).ready(function () {
 
   function checkForFoodCollision(x, y) {
     if (y == snackI && x == snackJ) {
-      snake.len++;
+      score++;
       $(".circle").remove();
       generateSnack();
+      $("#score").text(score);
+      return true;
+    }
+    return false;
+  }
+
+  function checkForSpecialFoodCollision(x, y) {
+    console.log(x);
+    console.log(y);
+    console.log(specialI);
+    console.log(specialJ);
+
+    if (y == specialI && x == specialJ) {
+      score += 10;
+      specialRemoved = true;
+      removeSpecialSnack();
+
+      $("#score").text(score);
       return true;
     }
     return false;
@@ -63,10 +84,7 @@ $(document).ready(function () {
   }
 
   function moveSnake(newY, newX) {
-    // directions.unshift(dir);
-
     last = snake.body[snake.body.length - 1];
-
     let str =
       "#game-board tr:nth-child(" +
       last.y +
@@ -84,7 +102,14 @@ $(document).ready(function () {
     if (checkForFoodCollision(newX, newY)) {
       let p;
       p = new Point(last.x, last.y);
-
+      snake.body.push(p);
+      let str =
+        "#game-board tr:nth-child(" + last.y + ") td:nth-child(" + last.x + ")";
+      $(str).append($("<div></div>").attr("class", "snake"));
+    }
+    if (checkForSpecialFoodCollision(newX, newY)) {
+      let p;
+      p = new Point(last.x, last.y);
       snake.body.push(p);
       let str =
         "#game-board tr:nth-child(" + last.y + ") td:nth-child(" + last.x + ")";
@@ -120,10 +145,17 @@ $(document).ready(function () {
 
   // MAIN
   function startGame() {
-    // alert("aa");
     optionNumBoardSize = localStorage.getItem("board-size");
     drawBoard(optionNumBoardSize);
     generateSnack();
+    setInterval(function () {
+      generateSpecialSnack();
+      setTimeout(() => {
+        // if (!specialRemoved)
+        removeSpecialSnack();
+        specialRemoved = true;
+      }, 5000);
+    }, 10000);
     $(document).keydown((event) => {
       keyHandler(event);
     });
@@ -162,6 +194,41 @@ $(document).ready(function () {
       $("#game-board").append(row);
     }
     drawSnake();
+  }
+
+  function generateSpecialSnack() {
+    let n = Math.floor(Math.random() * (boardSize * boardSize));
+    specialI = Math.floor(n / boardSize) + 1;
+    specialJ = Math.floor(n % boardSize) + 1;
+    let s =
+      "#game-board tr:nth-child(" +
+      specialI +
+      ") td:nth-child(" +
+      specialJ +
+      ") .snake";
+
+    while ($(s).length || (specialI == snackI && specialJ == snackJ)) {
+      n = Math.floor(Math.random() * (boardSize * boardSize));
+    }
+
+    specialI = Math.floor(n / boardSize) + 1;
+    specialJ = Math.floor(n % boardSize) + 1;
+
+    specialRemoved = false;
+    let str =
+      "#game-board tr:nth-child(" +
+      specialI +
+      ") td:nth-child(" +
+      specialJ +
+      ")";
+
+    $(str).append($("<div></div>").attr("class", "star"));
+  }
+
+  function removeSpecialSnack() {
+    $(".star").remove();
+    specialI = 0;
+    specialJ = 0;
   }
 
   function generateSnack() {
