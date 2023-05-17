@@ -15,7 +15,9 @@ $(document).ready(function () {
     }
   }
   let boardSize;
+  let playerName;
   let score = 0;
+  let scores = [];
   let optionNumBoardSize = 1;
   let board = $("#game-board");
   const snake = new Snake(5, 5);
@@ -24,20 +26,33 @@ $(document).ready(function () {
   let snackJ;
   let specialI;
   let specialJ;
-  let specialRemoved = true;
+  let gameOverFlag = false;
 
   $("#start").click(function () {
     optionNumBoardSize = $("#table-size-select").val();
+    playerName = $("#player-name").val();
+    localStorage.setItem("playerName", playerName);
+
     localStorage.setItem("board-size", optionNumBoardSize);
     // startGame();
     window.location.href = "zmijica-igra.html";
     // alert("A");
     // startGame();
   });
-
   startGame();
+  // showResults();
 
   function gameOver() {
+    localStorage.setItem("score", score);
+    let scores1 = JSON.parse(localStorage.getItem("scores"));
+    if (scores1 == null) scores1.push({ name: "ooo", score: 97 });
+    else {
+      scores1.push({ name: playerName, score: score });
+    }
+    console.log(scores1);
+    localStorage.setItem("scores", JSON.stringify(scores1));
+    window.location.href = "zmijica-rezultati.html";
+    gameOverFlag = true;
     alert("game over");
   }
 
@@ -53,14 +68,9 @@ $(document).ready(function () {
   }
 
   function checkForSpecialFoodCollision(x, y) {
-    console.log(x);
-    console.log(y);
-    console.log(specialI);
-    console.log(specialJ);
-
     if (y == specialI && x == specialJ) {
       score += 10;
-      specialRemoved = true;
+      //   specialRemoved = true;
       removeSpecialSnack();
 
       $("#score").text(score);
@@ -120,33 +130,63 @@ $(document).ready(function () {
   function keyHandler(event) {
     if (event.keyCode == 38) {
       newSnakeY = snake.y - 1;
-      if (newSnakeY == 0) gameOver();
+      if (newSnakeY == 0) {
+        gameOver();
+        return;
+      }
       moveSnake(newSnakeY, snake.x);
     }
     //dole
     if (event.keyCode == 40) {
       newSnakeY = snake.y + 1;
-      if (newSnakeY == boardSize + 1) gameOver();
+      if (newSnakeY == boardSize + 1) {
+        gameOver();
+        return;
+      }
       moveSnake(newSnakeY, snake.x);
     }
     //levo
     if (event.keyCode == 37) {
       newSnakeX = snake.x - 1;
-      if (newSnakeX == 0) gameOver();
+      if (newSnakeX == 0) {
+        gameOver();
+        return;
+      }
       moveSnake(snake.y, newSnakeX);
     }
     //desno
     if (event.keyCode == 39) {
       newSnakeX = snake.x + 1;
-      if (newSnakeX == boardSize + 1) gameOver();
+      if (newSnakeX == boardSize + 1) {
+        gameOver();
+        return;
+      }
       moveSnake(snake.y, newSnakeX);
     }
   }
 
+  function showResults() {
+    // alert("mmm");
+
+    let scoress = localStorage.getItem("scores");
+    if (scoress != null) {
+      scores = JSON.parse(scoress);
+      scores.forEach((element) => {
+        row = $("<tr></tr>");
+        row.append($("<td></td>").text(element.name));
+        row.append($("<td></td>").text(element.score));
+        $("#results-table").append(row);
+      });
+    }
+
+    // $("#results-table").append($("<div></div>").text("aaa"));
+  }
   // MAIN
   function startGame() {
     optionNumBoardSize = localStorage.getItem("board-size");
-    drawBoard(optionNumBoardSize);
+    playerName = localStorage.getItem("playerName");
+
+    drawBoard(optionNumBoardSize, playerName);
     generateSnack();
     setInterval(function () {
       generateSpecialSnack();
@@ -159,6 +199,8 @@ $(document).ready(function () {
     $(document).keydown((event) => {
       keyHandler(event);
     });
+    showResults();
+    return;
   }
 
   function drawSnake() {
@@ -168,7 +210,8 @@ $(document).ready(function () {
     $(str).append($("<div></div>").attr("class", "snake"));
   }
 
-  function drawBoard(optionNumBoardSize) {
+  function drawBoard(optionNumBoardSize, playerName) {
+    $("#playerName").text(playerName);
     if (optionNumBoardSize == 1) {
       boardSize = 15;
     } else if (optionNumBoardSize == 2) {
@@ -198,23 +241,20 @@ $(document).ready(function () {
 
   function generateSpecialSnack() {
     let n = Math.floor(Math.random() * (boardSize * boardSize));
-    specialI = Math.floor(n / boardSize) + 1;
-    specialJ = Math.floor(n % boardSize) + 1;
+    i = Math.floor(n / boardSize) + 1;
+    j = Math.floor(n % boardSize) + 1;
     let s =
-      "#game-board tr:nth-child(" +
-      specialI +
-      ") td:nth-child(" +
-      specialJ +
-      ") .snake";
+      "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .snake";
 
-    while ($(s).length || (specialI == snackI && specialJ == snackJ)) {
+    while ($(s).length || (i == snackI && j == snackJ)) {
       n = Math.floor(Math.random() * (boardSize * boardSize));
+      s = "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .snake";
     }
 
     specialI = Math.floor(n / boardSize) + 1;
     specialJ = Math.floor(n % boardSize) + 1;
 
-    specialRemoved = false;
+    // specialRemoved = false;
     let str =
       "#game-board tr:nth-child(" +
       specialI +
