@@ -2,11 +2,14 @@ $(document).ready(function () {
   showResults();
 
   function showResults() {
-    let lastPlayer = localStorage.getItem("playerName");
-    let lastScore = localStorage.getItem("storage");
     let scoress = localStorage.getItem("scores");
     if (scoress != null) {
       scores = JSON.parse(scoress);
+      lastPlayer = scores[scores.length - 1].name;
+      lastScore = scores[scores.length - 1].score;
+      $("#playerName").text(lastPlayer);
+      $("#scoree").text(lastScore);
+
       sortScores(scores);
       let i = 0;
 

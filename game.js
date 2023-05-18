@@ -34,10 +34,8 @@ $(document).ready(function () {
 
   function gameOver() {
     alert("game over");
-    localStorage.setItem("score", score);
 
     playerName = prompt("Enter player name:");
-    localStorage.setItem("playerName", playerName);
 
     let scores1 = JSON.parse(localStorage.getItem("scores"));
     if (scores1 == null) scores1 = [];
@@ -97,6 +95,23 @@ $(document).ready(function () {
       ") .snake";
     $(str).remove();
     snake.body.pop();
+
+    str =
+      "#game-board tr:nth-child(" +
+      last.y +
+      ") td:nth-child(" +
+      last.x +
+      ") .head";
+    $(str).remove();
+
+    str =
+      "#game-board tr:nth-child(" +
+      snake.y +
+      ") td:nth-child(" +
+      snake.x +
+      ") div";
+    $(str).removeClass("head");
+    $(str).attr("class", "snake");
     snake.y = newY;
     snake.x = newX;
     snake.body.unshift(new Point(newX, newY));
@@ -124,6 +139,7 @@ $(document).ready(function () {
   function keyHandler(event) {
     // if (gameOverFlag) return;
     if (event.keyCode == 38) {
+      if (lastDirection == 40) return;
       lastDirection = 38;
       newSnakeY = snake.y - 1;
       if (newSnakeY == 0) {
@@ -135,6 +151,8 @@ $(document).ready(function () {
     }
     //dole
     if (event.keyCode == 40) {
+      if (lastDirection == 38) return;
+
       lastDirection = 40;
       newSnakeY = snake.y + 1;
       if (newSnakeY == boardSize + 1) {
@@ -146,6 +164,8 @@ $(document).ready(function () {
     }
     //levo
     if (event.keyCode == 37) {
+      if (lastDirection == 39) return;
+
       lastDirection = 37;
       newSnakeX = snake.x - 1;
       if (newSnakeX == 0) {
@@ -157,6 +177,8 @@ $(document).ready(function () {
     }
     //desno
     if (event.keyCode == 39) {
+      if (lastDirection == 37) return;
+
       lastDirection = 39;
       newSnakeX = snake.x + 1;
       if (newSnakeX == boardSize + 1) {
@@ -171,9 +193,11 @@ $(document).ready(function () {
   function startGame() {
     let gf = false;
     optionNumBoardSize = localStorage.getItem("board-size");
-    playerName = localStorage.getItem("playerName");
+    let selectLevel = localStorage.getItem("level");
 
-    drawBoard(optionNumBoardSize, playerName);
+    interval = setLevel(selectLevel);
+
+    drawBoard(optionNumBoardSize);
     generateSnack();
     setInterval(function () {
       generateSpecialSnack();
@@ -199,17 +223,23 @@ $(document).ready(function () {
     let str =
       "#game-board tr:nth-child(" + snake.y + ") td:nth-child(" + snake.x + ")";
 
-    $(str).append($("<div></div>").attr("class", "snake"));
+    $(str).append($("<div></div>").attr("class", "head"));
   }
 
-  function drawBoard(optionNumBoardSize, playerName) {
+  function setLevel(selectLevel) {
+    if (selectLevel == 1) interval = 1000;
+    else if (selectLevel == 2) interval = 500;
+    else if (selectLevel == 3) interval = 300;
+    return interval;
+  }
+  function drawBoard(optionNumBoardSize) {
     $("#playerName").text(playerName);
     if (optionNumBoardSize == 1) {
       boardSize = 15;
     } else if (optionNumBoardSize == 2) {
-      boardSize = 25;
+      boardSize = 20;
     } else if (optionNumBoardSize == 3) {
-      boardSize = 35;
+      boardSize = 25;
     }
 
     let colors = ["rgb(66, 112, 153)", "rgb(56, 89, 119)"];

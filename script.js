@@ -7,6 +7,9 @@ $(document).ready(function () {
 
   $("#start").click(function () {
     optionNumBoardSize = $("#table-size-select").val();
+    optionGameLevel = $("#level-select").val();
+    console.log(optionGameLevel);
+    localStorage.setItem("level", optionGameLevel);
     localStorage.setItem("board-size", optionNumBoardSize);
     window.location.href = "zmijica-igra.html";
   });

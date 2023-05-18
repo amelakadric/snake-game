@@ -4,9 +4,6 @@
 
 td {
   /* border: 1px; */
-  background-color: rgb(66, 112, 153);
-  background-color: rgb(48, 78, 104);
-
   width: 1.2rem;
   height: 1.2rem;
   padding: 0;
@@ -33,8 +30,23 @@ td {
   background-color: orange;
   width: 1.2rem;
   height: 1.2rem;
+  /* margin-left: 0.2rem; */
+  border-radius: 0.1rem;
 }
 
+.head {
+  background-color: brown;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.1rem;
+}
 .score {
   margin: 2rem auto;
 }
+
+/* #results-table {
+} */
+
+/* #results-table td {
+  border: 1px solid gray;
+} */
