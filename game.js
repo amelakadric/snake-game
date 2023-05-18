@@ -29,6 +29,8 @@ $(document).ready(function () {
   let specialI;
   let specialJ;
   let gameOverFlag;
+  let sizeRem;
+  let sizeNum;
   startGame();
   // showResults();
 
@@ -62,7 +64,6 @@ $(document).ready(function () {
   function checkForSpecialFoodCollision(x, y) {
     if (y == specialI && x == specialJ) {
       score += 10;
-      //   specialRemoved = true;
       removeSpecialSnack();
 
       $("#score").text(score);
@@ -138,6 +139,7 @@ $(document).ready(function () {
 
   function keyHandler(event) {
     // if (gameOverFlag) return;
+    if (event.keyCode == null) return;
     if (event.keyCode == 38) {
       if (lastDirection == 40) return;
       lastDirection = 38;
@@ -214,6 +216,7 @@ $(document).ready(function () {
       let e = new KeyboardEvent("keydown", { keyCode: lastDirection });
       keyHandler(e);
     }, interval);
+    // clearInterval(intervalID);
 
     gameOverFlag = localStorage.getItem("gameOver");
     return;
@@ -235,14 +238,20 @@ $(document).ready(function () {
   function drawBoard(optionNumBoardSize) {
     $("#playerName").text(playerName);
     if (optionNumBoardSize == 1) {
-      boardSize = 15;
+      boardSize = 7;
+      sizeRem = "4rem";
+      sizeNum = 4;
     } else if (optionNumBoardSize == 2) {
-      boardSize = 20;
+      boardSize = 10;
+      sizeRem = "3.5rem";
+      sizeNum = 3.5;
     } else if (optionNumBoardSize == 3) {
-      boardSize = 25;
+      sizeRem = "3rem";
+      sizeNum = 3;
+      boardSize = 13;
     }
 
-    let colors = ["rgb(66, 112, 153)", "rgb(56, 89, 119)"];
+    let colors = ["rgb(246, 197, 220)", "rgb(253, 164, 207)"];
     let flag = 0;
 
     for (let i = 1; i <= boardSize; i++) {
@@ -253,7 +262,11 @@ $(document).ready(function () {
         if (flag == 0) flag = 1;
         else flag = 0;
         let field = row.append(
-          $("<td></td>").css("background-color", colors[0 + (flag % 2)])
+          $("<td></td>").css({
+            "background-color": colors[0 + (flag % 2)],
+            width: sizeRem,
+            height: sizeRem,
+          })
         );
       }
       $("#game-board").append(row);
@@ -283,8 +296,18 @@ $(document).ready(function () {
       ") td:nth-child(" +
       specialJ +
       ")";
+    let w = sizeNum / 2;
+    let br = w / 2;
+    let m = w / 2;
+    w = w + "rem";
+    br = br + "rem";
+    m = m + "rem";
 
-    $(str).append($("<div></div>").attr("class", "star"));
+    $(str).append(
+      $("<div></div>")
+        .attr("class", "star")
+        .css({ width: w, height: w, "margin-left": m, "border-radius": br })
+    );
   }
 
   function removeSpecialSnack() {
@@ -295,25 +318,35 @@ $(document).ready(function () {
 
   function generateSnack() {
     let n = Math.floor(Math.random() * (boardSize * boardSize));
-    snackI = Math.floor(n / boardSize) + 1;
-    snackJ = Math.floor(n % boardSize) + 1;
+    let p = Math.floor(n / boardSize) + 1;
+    let q = Math.floor(n % boardSize) + 1;
     let s =
-      "#game-board tr:nth-child(" +
-      snackI +
-      ") td:nth-child(" +
-      snackJ +
-      ") .snake";
+      "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .snake";
 
     while ($(s).length) {
       n = Math.floor(Math.random() * (boardSize * boardSize));
+      p = Math.floor(n / boardSize) + 1;
+      q = Math.floor(n % boardSize) + 1;
+      s = "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .snake";
     }
 
     snackI = Math.floor(n / boardSize) + 1;
     snackJ = Math.floor(n % boardSize) + 1;
-
+    let w = sizeNum / 2;
+    let br = w / 2;
+    let m = w / 2;
+    w = w + "rem";
+    br = br + "rem";
+    m = m + "rem";
     let str =
       "#game-board tr:nth-child(" + snackI + ") td:nth-child(" + snackJ + ")";
 
     $(str).append($("<div></div>").attr("class", "circle"));
+    $(".circle").css({
+      width: w,
+      height: w,
+      "margin-left": m,
+      "border-radius": br,
+    });
   }
 });

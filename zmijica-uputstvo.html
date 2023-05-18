@@ -15,41 +15,41 @@
   </head>
   <body>
     <div class="container text-center">
-    <div class="h1 text-center">Snake game</div>
+    <div class="h1 text-center mt-5">Snake game</div>
 
-    <div class="col-12">
-      Welcome to the Snake Game! 
+    <div class="col-12 mt-">
+     <h3> Welcome to the Snake game! </h3>
     </div>  
-    <div class="col-12">
-      How to play:
-      Use the arrow keys (up, down, left, right) on your keyboard to control the direction of the snake.
-      Eat the food, but not yourself!
-      Good luck!
+    <div class="col-12 mt-5">
+     <h4> How to play:</h4><br>
+      Use the arrow keys (up, down, left, right) on your keyboard to control the direction of the snake. <br>
+      Make sure you don't bump into the walls. <br> Eat the food, but not yourself!
+      <br> Good luck!
     </div>
+    <hr>
 
-    <div class="container d-flex justify-content-around">
+    <div class="container ">
       
-
-      <div class="card col-5">
-        <div class="card-header text-center">
+      <div class="card col-3 d-inline-block  levelCards ">
+        <div class="card-header text-center ">
           Choose table size
         </div>
         <div class="card-body">
-            <select id="table-size-select" class="form-select col-2 aria-label="Default select example">
+            <select id="table-size-select" class=" selectInputs form-select col-2 aria-label="Default select example">
               <!-- <option selected>Open this select menu</option> -->
-              <option value="1">15x15</option>
-              <option value="2">20x20</option>
-              <option value="3">25x25</option>
+              <option value="1">7x7</option>
+              <option value="2">10x10</option>
+              <option value="3">13x13</option>
             </select>
         </div>
       </div>
 
-      <div class="card col-5">
-        <div class="card-header text-center">
+      <div class="card col-3 d-inline-block m-lg-4 levelCards">
+        <div class="card-header text-center ">
          Choose level
         </div>
         <div class="card-body">
-            <select id="level-select" class="form-select col-2 aria-label="Default select example">
+            <select id="level-select" class=" selectInputs form-select col-2 aria-label="Default select example">
               <!-- <option selected>Open this select menu</option> -->
               <option value="1">Easy</option>
               <option value="2">Medium</option>
@@ -60,9 +60,16 @@
 
      </div>
      
-          <button id="start" type="button" class="btn btn-success text-center mt-3">Start game</button>
+          <!-- <button id="start" type="button" class="btn btn-success text-center mt-3">Start game</button> -->
+          <button id="start">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span> Start game
+          </button>
            <div class="container">
-              <a href="zmijica-rezultati.html">See results</a>
+              <a href="zmijica-rezultati.html">
+                See previous scores           </a>
             </div>
 
      
