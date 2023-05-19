@@ -21,7 +21,7 @@ $(document).ready(function () {
   let scores = [];
   let optionNumBoardSize = 1;
   let board = $("#game-board");
-  let lastDirection = 40;
+  let lastDirection;
   const snake = new Snake(5, 5);
   let interval = 500;
   let snackI;
@@ -35,7 +35,7 @@ $(document).ready(function () {
   // showResults();
 
   function gameOver() {
-    alert("game over");
+    alert("GAME OVER");
 
     playerName = prompt("Enter player name:");
 
@@ -204,10 +204,10 @@ $(document).ready(function () {
     setInterval(function () {
       generateSpecialSnack();
       setTimeout(() => {
-        // if (!specialRemoved)
         removeSpecialSnack();
       }, 5000);
     }, 10000);
+
     $(document).keydown((event) => {
       keyHandler(event);
       gf = true;
@@ -218,7 +218,6 @@ $(document).ready(function () {
     }, interval);
     // clearInterval(intervalID);
 
-    gameOverFlag = localStorage.getItem("gameOver");
     return;
   }
 
@@ -280,10 +279,16 @@ $(document).ready(function () {
     j = Math.floor(n % boardSize) + 1;
     let s =
       "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .snake";
+    let str2 =
+      "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .head";
 
-    while ($(s).length || (i == snackI && j == snackJ)) {
+    while ($(s).length || $(str2).length || (i == snackI && j == snackJ)) {
       n = Math.floor(Math.random() * (boardSize * boardSize));
+      i = Math.floor(n / boardSize) + 1;
+      j = Math.floor(n % boardSize) + 1;
       s = "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .snake";
+      str2 =
+        "#game-board tr:nth-child(" + i + ") td:nth-child(" + j + ") .head";
     }
 
     specialI = Math.floor(n / boardSize) + 1;
@@ -299,14 +304,16 @@ $(document).ready(function () {
     let w = sizeNum / 2;
     let br = w / 2;
     let m = w / 2;
+    let h = w + 0.65;
     w = w + "rem";
-    br = br + "rem";
+    h = h + "rem";
+    // br = br + "rem";
     m = m + "rem";
 
     $(str).append(
       $("<div></div>")
         .attr("class", "star")
-        .css({ width: w, height: w, "margin-left": m, "border-radius": br })
+        .css({ width: w, height: h, "margin-left": m })
     );
   }
 
@@ -322,12 +329,16 @@ $(document).ready(function () {
     let q = Math.floor(n % boardSize) + 1;
     let s =
       "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .snake";
+    let str2 =
+      "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .head";
 
-    while ($(s).length) {
+    while ($(s).length || $(str2).length || (specialI == p && specialJ == q)) {
       n = Math.floor(Math.random() * (boardSize * boardSize));
       p = Math.floor(n / boardSize) + 1;
       q = Math.floor(n % boardSize) + 1;
       s = "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .snake";
+      str2 =
+        "#game-board tr:nth-child(" + p + ") td:nth-child(" + q + ") .head";
     }
 
     snackI = Math.floor(n / boardSize) + 1;
@@ -346,7 +357,7 @@ $(document).ready(function () {
       width: w,
       height: w,
       "margin-left": m,
-      "border-radius": br,
+      // "border-radius": br,
     });
   }
 });
