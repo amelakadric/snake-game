@@ -11,6 +11,22 @@ $(document).ready(function () {
     console.log(optionGameLevel);
     localStorage.setItem("level", optionGameLevel);
     localStorage.setItem("board-size", optionNumBoardSize);
-    window.location.href = "zmijica-igra.html";
+
+    let allScores = [];
+    fetch("https://snake-game-cdrt.onrender.com/scores", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        allScores = data.data;
+        localStorage.setItem("allScores", JSON.stringify(allScores));
+        console.log(allScores);
+        // window.location.href = "zmijica-igra.html";
+      });
   });
 });

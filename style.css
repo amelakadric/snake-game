@@ -118,7 +118,7 @@ button {
 
 .resCard {
   width: 20rem;
-  height: 18rem !important;
+  height: auto !important;
 }
 
 .levelCards {

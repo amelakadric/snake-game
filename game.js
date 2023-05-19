@@ -45,9 +45,30 @@ $(document).ready(function () {
     localStorage.setItem("scores", JSON.stringify(scores1));
 
     clearInterval(intervalID);
-    gameOverFlag = true;
 
-    window.location.href = "zmijica-rezultati.html";
+    gameOverFlag = true;
+    fetch("https://snake-game-cdrt.onrender.com/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: playerName,
+        score: score,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        const allScores = JSON.parse(localStorage.getItem("allScores"));
+        console.log(allScores);
+        console.log(res.data);
+        allScores.push(res.data);
+        localStorage.setItem("allScores", JSON.stringify(allScores));
+        // window.location.href = "zmijica-rezultati.html";
+      })
+      .catch((error) => console.log(error));
   }
 
   function checkForFoodCollision(x, y) {
