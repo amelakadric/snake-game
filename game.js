@@ -304,7 +304,7 @@ $(document).ready(function () {
     let w = sizeNum / 2;
     let br = w / 2;
     let m = w / 2;
-    let h = w + 0.65;
+    let h = w + 0.64;
     w = w + "rem";
     h = h + "rem";
     // br = br + "rem";
