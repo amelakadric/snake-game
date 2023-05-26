@@ -305,3 +305,7 @@
     opacity: 1;
   }
 }
+
+#start {
+  width: 30%;
+}

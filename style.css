@@ -24,7 +24,7 @@ body {
 @keyframes gameOverAnimation {
   0% {
     opacity: 0.8;
-    transform: translateY(-30%);
+    transform: translateY(-20%);
   }
   20% {
     opacity: 0.9;
@@ -47,7 +47,7 @@ aside {
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(29, 22, 29, 0.2);
   display: none;
-  animation: gameOverAnimation 2000ms;
+  animation: gameOverAnimation 1000ms;
 }
 
 aside input {
@@ -61,6 +61,12 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+#game-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 #game-board {
   margin: 3rem auto 1rem;
   border: 1px rgb(183, 50, 116);
