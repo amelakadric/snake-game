@@ -19,6 +19,8 @@ body {
   height: 100%;
   background-color: rgba(188, 159, 159, 0.7);
   display: none;
+  align-items: center;
+  text-align: center;
 }
 
 @keyframes gameOverAnimation {
@@ -39,11 +41,12 @@ aside {
   position: fixed;
   text-align: center;
   top: 20%;
-  width: 40rem;
-  padding: 1.5rem 4rem;
+  left: 27.5%;
+  width: 45%;
+  padding: 1rem;
   background-color: rgb(65, 22, 54);
   color: rgb(213, 187, 207);
-  margin: 0 29%;
+  /* margin: 0 auto; */
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(29, 22, 29, 0.2);
   display: none;
@@ -51,6 +54,8 @@ aside {
 }
 
 aside input {
+  width: 70%;
+  text-align: center;
   background-color: rgb(163, 54, 136);
   color: rgb(213, 187, 207);
   border-radius: 0.5rem;
