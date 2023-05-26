@@ -2,8 +2,59 @@ body {
   background-color: rgb(245, 236, 228);
 }
 
+.transition-div {
+  width: 100%;
+  height: 100%;
+}
+
+#backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(188, 159, 159, 0.7);
+  display: none;
+}
+
+@keyframes gameOverAnimation {
+  0% {
+    opacity: 0.8;
+    transform: translateY(-30%);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+aside {
+  position: fixed;
+  text-align: center;
+  top: 20%;
+  width: 40rem;
+  padding: 1.5rem 4rem;
+  background-color: rgb(65, 22, 54);
+  color: rgb(213, 187, 207);
+  margin: 0 29%;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(29, 22, 29, 0.2);
+  display: none;
+  animation: gameOverAnimation 2000ms;
+}
+
+aside input {
+  background-color: rgb(163, 54, 136);
+  color: rgb(213, 187, 207);
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: rgb(87, 34, 74);
+}
 h1 {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 #game-board {
@@ -70,7 +121,7 @@ td {
   /* margin-left: 0.5rem; */
 }
 .score {
-  margin: 2rem auto;
+  margin: 0 auto 0;
 }
 
 .card-header {
@@ -99,12 +150,12 @@ a:hover {
 }
 
 button {
-  margin: 2rem 0 1rem;
+  margin: 1rem 0 1rem;
   position: relative;
   padding: 1em 1.8em;
   outline: none;
   border: 1px solid #303030;
-  background: #293275;
+  background: #502156;
   color: #7fd5a5;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -128,12 +179,12 @@ button {
 
 .selectInputs {
   border-radius: 1rem;
-  background-color: #f5e9e9;
+  background-color: #f9e5e5;
   border: none;
 }
 
 button:hover {
-  box-shadow: 0 0 10px #006aff, 0 0 25px #3f4db7, 0 0 50px #1e874b;
+  box-shadow: 0 0 10px #611652, 0 0 25px #b73fa7, 0 0 50px #1e874b;
   transition-delay: 0.6s;
 }
 
@@ -159,7 +210,7 @@ button span:nth-child(3) {
   right: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #001eff);
+  background: linear-gradient(90deg, transparent, #293792);
 }
 
 button:hover span:nth-child(3) {

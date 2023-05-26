@@ -34,19 +34,10 @@ $(document).ready(function () {
   startGame();
   // showResults();
 
-  function gameOver() {
-    alert("GAME OVER");
+  function handleSubmit(e) {
+    e.preventDefault();
+    playerName = $("aside input").val();
 
-    playerName = prompt("Enter player name:");
-
-    let scores1 = JSON.parse(localStorage.getItem("scores"));
-    if (scores1 == null) scores1 = [];
-    scores1.push({ name: playerName, score: score });
-    localStorage.setItem("scores", JSON.stringify(scores1));
-
-    clearInterval(intervalID);
-
-    gameOverFlag = true;
     fetch("https://snake-game-cdrt.onrender.com/scores", {
       method: "POST",
       headers: {
@@ -62,13 +53,29 @@ $(document).ready(function () {
       })
       .then((res) => {
         const allScores = JSON.parse(localStorage.getItem("allScores"));
-        console.log(allScores);
+        console.log("allScores", allScores);
         console.log(res.data);
         allScores.push(res.data);
         localStorage.setItem("allScores", JSON.stringify(allScores));
-        // window.location.href = "zmijica-rezultati.html";
+        window.location.href = "zmijica-uputstvo.html";
       })
       .catch((error) => console.log(error));
+  }
+
+  function gameOver() {
+    // alert("GAME OVER");
+
+    $("#backdrop").css({ display: "block" });
+
+    $("aside").css({ display: "block" });
+    clearInterval(intervalID);
+    gameOverFlag = true;
+
+    $("#confirm").click(function (e) {
+      handleSubmit(e);
+    });
+
+    // playerName = prompt("Enter player name:");
   }
 
   function checkForFoodCollision(x, y) {
@@ -159,7 +166,7 @@ $(document).ready(function () {
   }
 
   function keyHandler(event) {
-    // if (gameOverFlag) return;
+    if (gameOverFlag) return;
     if (event.keyCode == null) return;
     if (event.keyCode == 38) {
       if (lastDirection == 40) return;
