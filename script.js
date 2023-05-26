@@ -4,8 +4,14 @@ $(document).ready(function () {
   let scores = [];
   let optionNumBoardSize = 1;
   let interval = 500;
+  let intervalID;
 
   let allScores = [];
+
+  intervalID = setTimeout(function () {
+    $(".loadingScreen h2").css("display", "block");
+  }, 5000);
+
   fetch("https://snake-game-cdrt.onrender.com/scores", {
     method: "GET",
     headers: {
@@ -21,28 +27,9 @@ $(document).ready(function () {
       console.log(allScores);
     })
     .then((data) => {
-      let as = JSON.parse(localStorage.getItem("allScores"));
-      lastPlayer = as[as.length - 1].name;
-      lastScore = as[as.length - 1].score;
-
-      console.log(allScores);
-      $("#playerName").text(lastPlayer);
-      $("#scoree").text(lastScore);
-
-      sortScores(allScores);
-
-      for (
-        let i = 0;
-        i < (allScores.length > 10 ? 10 : allScores.length);
-        i++
-      ) {
-        row = $("<tr></tr>");
-        row.append($("<td></td>").text(allScores[i].name));
-        row.append($("<td></td>").text(allScores[i].score));
-        $("#results-table").append(row);
-      }
+      showResults();
       $(".loadingScreen").css("display", "none");
-      setTimeout(function () {});
+      clearTimeout(intervalID);
     });
 
   $("#start").click(function () {
@@ -64,6 +51,25 @@ $(document).ready(function () {
           scores[i] = tmp;
         }
       }
+    }
+  }
+
+  function showResults() {
+    let as = JSON.parse(localStorage.getItem("allScores"));
+    lastPlayer = as[as.length - 1].name;
+    lastScore = as[as.length - 1].score;
+
+    console.log(allScores);
+    $("#playerName").text(lastPlayer);
+    $("#scoree").text(lastScore);
+
+    sortScores(allScores);
+
+    for (let i = 0; i < (allScores.length > 10 ? 10 : allScores.length); i++) {
+      row = $("<tr></tr>");
+      row.append($("<td></td>").text(allScores[i].name));
+      row.append($("<td></td>").text(allScores[i].score));
+      $("#results-table").append(row);
     }
   }
 });

@@ -25,6 +25,29 @@
   animation-fill-mode: forwards;
 }
 
+.loadingScreen h2 {
+  margin: 15rem 40%;
+  font-size: large;
+  color: aliceblue;
+  animation: textAnimation;
+  animation-duration: 1000s;
+  display: none;
+}
+
+@keyframes textAnimation {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-5%);
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
 .loadingspinner {
   --square: 26px;
   --offset: 30px;
