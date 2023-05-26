@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="loader.css" />
     <link rel="stylesheet" href="style.css" />
 
+    
     <script src="script.js"></script>
     <!-- <script src="results.js"></script> -->
 
@@ -20,7 +21,7 @@
   
   <body>
 
-  <div class="transition-div">
+  <div class="transition-div d-flex flex-column justify-content-lg-center justify-content-sm-center ">
 
     
     <div class="h1 text-center mt-1">Snake game</div>
@@ -34,21 +35,21 @@
       </button>
       </div>
       
-    <div class="container-fluid col-sm-12 d-flex">
+    <div class="container-fluid col-sm-12 d-lg-flex d-sm-block ">
 
-      <div class="col-6 text-center d-inline-block">
+      <div class=" col-md-6 col-sm-12 text-center ">
       
-        <div class="col-12  text-center">
+        <div class="col-lg-6 col-sm-12 text-center d-inline">
           <h3> How to play:</h3><br>
           Use the arrow keys (up, down, left, right) on your keyboard to control <br> the direction of the snake. <br>
           Make sure you don't bump into the walls. <br> Eat the food, but not yourself!
           <br> Good luck!
-        </div>
+        
         <hr>
 
-        <div class="container-fluid ">
+        <div class="container-fluid col-sm-12">
           
-          <div class="card col-3 d-inline-block  levelCards ">
+          <div class="card col-6 d-inline-block  levelCards ">
             <div class="card-header text-center ">
               Choose table size
             </div>
@@ -61,12 +62,14 @@
                 </select>
             </div>
           </div>
+        
+
 
           <div class="card col-3 d-inline-block m-lg-4 levelCards">
             <div class="card-header text-center ">
             Choose level
             </div>
-            <div class="card-body">
+            <div class="card-body ">
                 <select id="level-select" class=" selectInputs form-select col-2 aria-label="Default select example">
                   <!-- <option selected>Open this select menu</option> -->
                   <option value="1">Easy</option>
@@ -75,13 +78,14 @@
                 </select>
             </div>
           </div>
+          </div>
 
         </div>
       </div>
 
-      <div class=" score text-center">
+      <div class=" col-lg-6 col-sm-12  score text-center">
 
-        <div class="score text-center d-inline-block">
+        <div class=" col-md-3 score text-center">
           <div class=""><h3>Last game </h3></div>
           <div class="">
             <table class="table">
@@ -99,7 +103,7 @@
     
 
       
-      <div class="text-center col-sm-3">
+      <div class="text-center score ">
         <div class="card text-center  selectInputs resCard">
           <div class="card-header"><h3> Top scores</h3></div>
           <div class="card-body">
