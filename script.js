@@ -41,9 +41,8 @@ $(document).ready(function () {
         row.append($("<td></td>").text(allScores[i].score));
         $("#results-table").append(row);
       }
-      setTimeout(function () {
-        $(".loadingScreen").css("display", "none");
-      }, 3000);
+      $(".loadingScreen").css("display", "none");
+      setTimeout(function () {});
     });
 
   $("#start").click(function () {
@@ -53,7 +52,7 @@ $(document).ready(function () {
     localStorage.setItem("level", optionGameLevel);
     localStorage.setItem("board-size", optionNumBoardSize);
 
-    window.location.href = "zmijica-igra.html";
+    window.location.href = "game.html";
   });
 
   function sortScores(scores) {

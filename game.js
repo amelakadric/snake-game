@@ -57,7 +57,7 @@ $(document).ready(function () {
         console.log(res.data);
         allScores.push(res.data);
         localStorage.setItem("allScores", JSON.stringify(allScores));
-        window.location.href = "zmijica-uputstvo.html";
+        window.location.href = "index.html";
       })
       .catch((error) => console.log(error));
   }
