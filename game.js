@@ -240,11 +240,12 @@ $(document).ready(function () {
       let keyStr = $(this).attr("data-key");
       let keyc = parseInt(keyStr);
       let e = new KeyboardEvent("keydown", { keyCode: keyc });
-      keyHandler(e);
+      lastDirection = e.keyc;
     });
 
     $(document).keydown((event) => {
-      keyHandler(event);
+      // keyHandler(event);
+      lastDirection = event.keyCode;
       gf = true;
     });
     intervalID = setInterval(function () {
@@ -264,7 +265,7 @@ $(document).ready(function () {
   }
 
   function setLevel(selectLevel) {
-    if (selectLevel == 1) interval = 800;
+    if (selectLevel == 1) interval = 700;
     else if (selectLevel == 2) interval = 500;
     else if (selectLevel == 3) interval = 300;
     return interval;
