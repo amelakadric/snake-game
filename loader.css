@@ -21,7 +21,7 @@
   /* display: block; */
   /* display: block; */
   animation-name: myAnimation;
-  animation-duration: 30000ms;
+  animation-duration: 70s;
   animation-fill-mode: forwards;
 }
 
