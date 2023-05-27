@@ -10,7 +10,7 @@ $(document).ready(function () {
 
   intervalID = setTimeout(function () {
     $(".loadingScreen h2").css("display", "block");
-  }, 5000);
+  }, 3000);
 
   fetch("https://snake-game-cdrt.onrender.com/scores", {
     method: "GET",
@@ -28,8 +28,13 @@ $(document).ready(function () {
     })
     .then((data) => {
       showResults();
+    })
+    .then((data) => {
       $(".loadingScreen").css("display", "none");
       clearTimeout(intervalID);
+    })
+    .catch((data) => {
+      console.log(data);
     });
 
   $("#start").click(function () {
