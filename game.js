@@ -239,8 +239,8 @@ $(document).ready(function () {
     $(".kbc-button").click(function () {
       let keyStr = $(this).attr("data-key");
       let keyc = parseInt(keyStr);
-      let e = new KeyboardEvent("keydown", { keyCode: keyc });
-      lastDirection = e.keyc;
+      // let e = new KeyboardEvent("keydown", { keyCode: keyc });
+      lastDirection = keyc;
     });
 
     $(document).keydown((event) => {
