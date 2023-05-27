@@ -11,6 +11,9 @@
     />
     <title>Snake game</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="keyboardButtons.css" />
+    <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
+
     <script src="game.js"></script>
   </head>
   <body>
@@ -40,8 +43,40 @@
           <div  class="col-2"><h4 id="score"> 0 </h4></div>
           
          </div>
+         <div id="mobile-controls" class="d-flex justify-content-center d-md-none d-sm-flex">
+         <table>
+          <tr>
+            <td></td>
+            <td>   
+               <a data-key="38"
+               class="kbc-button">↑</a>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>   
+               <a data-key="37" class="kbc-button">←</a>
+            </td>
+            <td></td>
+            <td>
+              <a data-key="39" class="kbc-button">→</a>
+            </td>
+          </tr><tr>
+            <td></td>
+            <td>   
+               <a data-key="40" class="kbc-button">↓</a>
+            </td>
+            <td></td>
+          </tr>
+          
+          </table>
+        </div>
       
     </div>
+    
+    
+
+    
   </div>
   </body>
 </html>

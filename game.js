@@ -236,6 +236,13 @@ $(document).ready(function () {
       }, 5000);
     }, 10000);
 
+    $(".kbc-button").click(function () {
+      let keyStr = $(this).attr("data-key");
+      let keyc = parseInt(keyStr);
+      let e = new KeyboardEvent("keydown", { keyCode: keyc });
+      keyHandler(e);
+    });
+
     $(document).keydown((event) => {
       keyHandler(event);
       gf = true;
@@ -339,9 +346,8 @@ $(document).ready(function () {
     m = m + "rem";
 
     $(str).append(
-      $("<div></div>")
-        .attr("class", "star")
-        .css({ width: w, height: h, "margin-left": m })
+      $("<div></div>").attr("class", "star")
+      // .css({ width: w, height: h, "margin-left": m })
     );
   }
 
@@ -381,11 +387,11 @@ $(document).ready(function () {
       "#game-board tr:nth-child(" + snackI + ") td:nth-child(" + snackJ + ")";
 
     $(str).append($("<div></div>").attr("class", "circle"));
-    $(".circle").css({
-      width: w,
-      height: w,
-      "margin-left": m,
-      // "border-radius": br,
-    });
+    // $(".circle").css({
+    //   width: w,
+    //   height: w,
+    //   "margin-left": m,
+    //   // "border-radius": br,
+    // });
   }
 });
