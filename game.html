@@ -29,7 +29,8 @@
         <h4>Enter your name:</h4>
         <form>
           <div>
-            <input type="text" name="playerName" id="playerName" required>
+            <input type="text" name="playerName" required="true" id="playerName" />
+            <label for="playerName" class="labela alert-danger d-none bg-transparent">This field is required</label>
           </div>
           <div>
             <button type="submit" id="confirm">Confirm</button>

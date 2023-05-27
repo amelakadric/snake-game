@@ -36,7 +36,6 @@ $(document).ready(function () {
 
   function handleSubmit(e) {
     e.preventDefault();
-    playerName = $("aside input").val();
 
     fetch("https://snake-game-cdrt.onrender.com/scores", {
       method: "POST",
@@ -72,10 +71,14 @@ $(document).ready(function () {
     gameOverFlag = true;
 
     $("#confirm").click(function (e) {
-      handleSubmit(e);
+      $("aside input").attr("required", "");
+      playerName = $("aside input").val();
+      if (playerName == "") {
+        playerName = $("aside input").val();
+      } else {
+        handleSubmit(e);
+      }
     });
-
-    // playerName = prompt("Enter player name:");
   }
 
   function checkForFoodCollision(x, y) {
