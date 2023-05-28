@@ -70,7 +70,7 @@ $(document).ready(function () {
 
     sortScores(allScores);
 
-    for (let i = 0; i < (allScores.length > 10 ? 10 : allScores.length); i++) {
+    for (let i = 0; i < (allScores.length > 15 ? 15 : allScores.length); i++) {
       row = $("<tr></tr>");
       row.append($("<td></td>").text(allScores[i].name));
       row.append($("<td></td>").text(allScores[i].score));
